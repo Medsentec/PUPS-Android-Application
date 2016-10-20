@@ -28,7 +28,10 @@ package com.nordicsemi.nrfUARTv2;
 
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 
 import com.nordicsemi.nrfUARTv2.UartService;
@@ -86,6 +89,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private ArrayAdapter<String> listAdapter;
     private Button btnConnectDisconnect,btnSend;
     private EditText edtMessage;
+    private ArrayList<String> allData;
+    private String data;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,6 +249,9 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                      public void run() {
                          try {
                          	String text = new String(txValue, "UTF-8");
+                             Log.d(TAG, "String is " + text);
+                             evaluateString(text);
+
                          	String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
                         	 	listAdapter.add("["+currentDateTimeString+"] RX: "+text);
                         	 	messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
@@ -270,6 +278,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
   
         LocalBroadcastManager.getInstance(this).registerReceiver(UARTStatusChangeReceiver, makeGattUpdateIntentFilter());
     }
+
     private static IntentFilter makeGattUpdateIntentFilter() {
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(UartService.ACTION_GATT_CONNECTED);
@@ -379,6 +388,32 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private void showMessage(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
   
+    }
+
+    private void evaluateString(String str) {
+        if (str.charAt(str.length() - 1) != '*') {
+            if (str.charAt(0) == '$') {
+                data = str;
+            } else {
+                data += str;
+            }
+        } else {
+            data += str;
+            Log.d(TAG, "FInal string is: " + data);
+            parseStringForData(data);
+            //allData.add(data);
+        }
+    }
+
+    private void parseStringForData(String completedStr) {
+        List<String> separatedValues = Arrays.asList(completedStr.split(","));
+        Log.d(TAG, "list looks like " + separatedValues);
+        List<String> pressureReadings = separatedValues.subList(1, separatedValues.indexOf("T") - 1); // Take everything except for the $ up to the 64th number
+        List<String> additionalData = separatedValues.subList(separatedValues.indexOf("T"), separatedValues.size());
+        Log.d(TAG, "Pressure readings: " + pressureReadings);
+        Log.d(TAG, "Additional Data: " + additionalData);
+
+
     }
 
     @Override
