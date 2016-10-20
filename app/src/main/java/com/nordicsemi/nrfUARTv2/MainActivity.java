@@ -425,7 +425,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         List<String> additionalData = separatedValues.subList(separatedValues.indexOf("T"), separatedValues.size());
         Log.d(TAG, "Pressure readings: " + pressureReadings);
         Log.d(TAG, "Additional Data: " + additionalData);
-        SensorData currData = new SensorData(pressureReadings, additionalData);
+        SensorData currData = new SensorData(pressureReadings, additionalData, DateFormat.getTimeInstance().format(new Date()));
         currData.printDataToDebug();
         completedNewSensorData = true;
         allData.add(currData);
