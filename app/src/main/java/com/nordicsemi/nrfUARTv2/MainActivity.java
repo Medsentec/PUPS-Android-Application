@@ -89,8 +89,9 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private ArrayAdapter<String> listAdapter;
     private Button btnConnectDisconnect,btnSend;
     private EditText edtMessage;
-    private ArrayList<String> allData;
+    private ArrayList<SensorData> allData = new ArrayList<SensorData>();
     private String data;
+    private Boolean completedNewSensorData = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -254,6 +255,17 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
                          	String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
                         	 	listAdapter.add("["+currentDateTimeString+"] RX: "+text);
+                                if(completedNewSensorData) {
+                                    Log.d(TAG, "Completed new sensor data");
+                                    SensorData currSensorData = allData.get(allData.size() - 1);
+                                    listAdapter.add("***COMPLETED DATA*** ");
+                                    listAdapter.add("Pressure readings: " + currSensorData.getPressureReadings());
+                                    listAdapter.add("Temperature readings: " + currSensorData.getTemperatureReadings());
+                                    listAdapter.add("Pitch and roll: " + currSensorData.getAxesReadings());
+                                    listAdapter.add("Voltage: " + currSensorData.getVoltageReading());
+                                    listAdapter.add("Packet size: " + currSensorData.getPacketSize());
+                                    listAdapter.add("Total number of readings: " + allData.size());
+                                }
                         	 	messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
                         	
                          } catch (Exception e) {
@@ -392,6 +404,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
     private void evaluateString(String str) {
         if (str.charAt(str.length() - 1) != '*') {
+            completedNewSensorData = false;
             if (str.charAt(0) == '$') {
                 data = str;
             } else {
@@ -412,8 +425,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         List<String> additionalData = separatedValues.subList(separatedValues.indexOf("T"), separatedValues.size());
         Log.d(TAG, "Pressure readings: " + pressureReadings);
         Log.d(TAG, "Additional Data: " + additionalData);
-
-
+        SensorData currData = new SensorData(pressureReadings, additionalData);
+        currData.printDataToDebug();
+        completedNewSensorData = true;
+        allData.add(currData);
     }
 
     @Override
