@@ -50,6 +50,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -92,6 +93,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private ArrayList<SensorData> allData = new ArrayList<SensorData>();
     private String data;
     private Boolean completedNewSensorData = false;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -266,6 +269,9 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                     listAdapter.add("Packet size: " + currSensorData.getPacketSize());
                                     listAdapter.add("Total number of readings: " + allData.size());
                                 }
+                             CustomView currView = (CustomView) findViewById(R.id.customView);
+                             currView.changeColor(determineColor("1"));
+
                         	 	messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
                         	
                          } catch (Exception e) {
@@ -416,6 +422,17 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             parseStringForData(data);
             //allData.add(data);
         }
+    }
+
+    private int determineColor (String s) {
+        int num = Integer.parseInt(s);
+        if(num >= 0 && num < 10) {
+            return Color.BLACK;
+        }
+        else if (num >= 10 && num < 20) {
+            return Color.CYAN;
+        }
+        else return Color.RED;
     }
 
     private void parseStringForData(String completedStr) {

@@ -26,17 +26,17 @@ public class CustomView extends View {
         super(context, attributeSet);
         int x = 50;
         int y = 50;
-        int sideLength = 100;
+        int sideLength = 200;
 
         for(int i = 0; i < 10; i++) {
             for(int j = 0; j < 10; j++) {
                 myColors[i][j] = Color.WHITE;
                 myGridPaint[i][j] = new Paint();
                 myGrid[i][j] = new Rect(x, y, sideLength, sideLength);
-                x += 100;
+                x += 200;
             }
             x = 50;
-            y += 100;
+            y += 200;
         }
 
 
@@ -51,8 +51,7 @@ public class CustomView extends View {
 
 
     public void changeColor(int newColor) {
-        Paint newPaint = new Paint();
-        newPaint.setColor(newColor);
+        myColors[0][0] = newColor;
         invalidate();
     }
 
