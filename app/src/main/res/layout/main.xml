@@ -4,6 +4,11 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <com.nordicsemi.nrfUARTv2.CustomView
+        android:layout_width="wrap_content"
+        android:layout_height="160dp"
+        android:id="@+id/customView" />
+
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"

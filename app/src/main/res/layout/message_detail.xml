@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:orientation="vertical" >
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/message_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="sss"
-        android:textSize="10sp" />
-
-    <!--<com.nordicsemi.nrfUARTv2.CustomView-->
-        <!--android:id="@+id/custom_view"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_width="match_parent" />-->
-</LinearLayout>
-
-
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/message_text"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:singleLine="false"
+    android:text="sss"
+    android:textSize="15dp" />
