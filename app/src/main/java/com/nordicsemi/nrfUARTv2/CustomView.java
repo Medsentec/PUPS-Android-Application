@@ -68,6 +68,37 @@ public class CustomView extends View {
         invalidate();
     }
 
+    public void updateArrayValues(Integer[][] newValues) {
+        Log.d(TAG, "updating array");
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                Integer num = newValues[i][j];
+                Log.d(TAG, Integer.toString(num));
+
+                if(num >= 0 && num < 10) {
+                    myColors[i][j] = Color.BLACK;
+                }
+                else if (num >= 10 && num < 20) {
+                    myColors[i][j] = Color.CYAN;
+                }
+                else if (num >= 20 && num < 30) {
+                    myColors[i][j] = Color.GREEN;
+                }
+                else if (num >=30 && num < 40) {
+                    myColors[i][j] = Color.YELLOW;
+                }
+                else if (num >= 40 && num < 50) {
+                    myColors[i][j] = Color.MAGENTA;
+                }
+                else if (num >= 50 && num < 60) {
+                    myColors[i][j] = Color.DKGRAY;
+                }
+                else myColors[i][j] = Color.RED;
+            }
+        }
+        invalidate();
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.BLUE);
@@ -75,7 +106,6 @@ public class CustomView extends View {
             for(int j = 0; j < 10; j++) {
                 myGridPaint[i][j].setColor(myColors[i][j]);
                 canvas.drawRect(myGrid[i][j], myGridPaint[i][j]);
-                Log.d(TAG, myGrid[i][j].flattenToString());
             }
         }
 

@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 
 import com.nordicsemi.nrfUARTv2.UartService;
@@ -71,6 +72,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 public class MainActivity extends Activity implements RadioGroup.OnCheckedChangeListener {
     private static final int REQUEST_SELECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
@@ -93,6 +95,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private ArrayList<SensorData> allData = new ArrayList<SensorData>();
     private String data;
     private Boolean completedNewSensorData = false;
+
+    private Random rand = new Random();
+    //private Integer[][] randomArr = new Integer[10][10];
+    private Integer[][] randomColorArr = new Integer[10][10];
 
 
     @Override
@@ -269,8 +275,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                     listAdapter.add("Packet size: " + currSensorData.getPacketSize());
                                     listAdapter.add("Total number of readings: " + allData.size());
                                 }
+                             fillRandArr();
                              CustomView currView = (CustomView) findViewById(R.id.customView);
-                             currView.changeColor(determineColor("1"));
+                             currView.updateArrayValues(randomColorArr);
+
 
                         	 	messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
                         	
@@ -424,16 +432,17 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         }
     }
 
-    private int determineColor (String s) {
-        int num = Integer.parseInt(s);
-        if(num >= 0 && num < 10) {
-            return Color.BLACK;
+    private void fillRandArr () {
+        Integer color;
+        for(int i = 0; i < 10; i++) {
+            for(int j = 0; j < 10; j++) {
+                Integer num = rand.nextInt(70);
+                randomColorArr[i][j] = num;
+            }
         }
-        else if (num >= 10 && num < 20) {
-            return Color.CYAN;
-        }
-        else return Color.RED;
     }
+
+
 
     private void parseStringForData(String completedStr) {
         List<String> separatedValues = Arrays.asList(completedStr.split(","));
