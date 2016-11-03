@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -13,6 +14,7 @@ import android.view.View;
  */
 
 public class CustomView extends View {
+    public static final String TAG = "CustomView";
     private Rect rectangle;
     private Paint paint;
     private Integer color;
@@ -24,19 +26,30 @@ public class CustomView extends View {
 
     public CustomView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-        int x = 50;
-        int y = 50;
-        int sideLength = 200;
+
+        int left = 50;
+        int top = 35;
+        int right = 85;
+        int bottom = 70;
 
         for(int i = 0; i < 10; i++) {
             for(int j = 0; j < 10; j++) {
-                myColors[i][j] = Color.WHITE;
+                if(j%2 == 0) {
+                    myColors[i][j] = Color.WHITE;
+                }
+                else {
+                    myColors[i][j] = Color.GREEN;
+                }
+
                 myGridPaint[i][j] = new Paint();
-                myGrid[i][j] = new Rect(x, y, sideLength, sideLength);
-                x += 200;
+                myGrid[i][j] = new Rect(left, top, right, bottom);
+               left += 35;
+                right += 35;
             }
-            x = 50;
-            y += 200;
+            left = 50;
+            right = 85;
+            top += 35;
+            bottom += 35;
         }
 
 
@@ -62,6 +75,7 @@ public class CustomView extends View {
             for(int j = 0; j < 10; j++) {
                 myGridPaint[i][j].setColor(myColors[i][j]);
                 canvas.drawRect(myGrid[i][j], myGridPaint[i][j]);
+                Log.d(TAG, myGrid[i][j].flattenToString());
             }
         }
 
