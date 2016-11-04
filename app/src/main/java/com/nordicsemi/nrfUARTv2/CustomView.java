@@ -19,9 +19,12 @@ public class CustomView extends View {
     private Paint paint;
     private Integer color;
 
-    private Rect[][] myGrid = new Rect[10][10];
-    private Paint[][] myGridPaint = new Paint[10][10];
-    private Integer[][] myColors = new Integer[10][10];
+    private final int rows = 10;
+    private final int cols = 10;
+
+    private Rect[][] myGrid = new Rect[rows][cols];
+    private Paint[][] myGridPaint = new Paint[rows][cols];
+    private Integer[][] myColors = new Integer[rows][cols];
 
 
     public CustomView(Context context, AttributeSet attributeSet) {
@@ -32,8 +35,8 @@ public class CustomView extends View {
         int right = 85;
         int bottom = 70;
 
-        for(int i = 0; i < 10; i++) {
-            for(int j = 0; j < 10; j++) {
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < cols; j++) {
                 if(j%2 == 0) {
                     myColors[i][j] = Color.WHITE;
                 }
@@ -70,8 +73,8 @@ public class CustomView extends View {
 
     public void updateArrayValues(Integer[][] newValues) {
         Log.d(TAG, "updating array");
-        for(int i = 0; i < 10; i++) {
-            for(int j = 0; j < 10; j++) {
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < cols; j++) {
                 Integer num = newValues[i][j];
                 Log.d(TAG, Integer.toString(num));
 
@@ -102,8 +105,8 @@ public class CustomView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(Color.BLUE);
-        for(int i = 0; i < 10; i++) {
-            for(int j = 0; j < 10; j++) {
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < cols; j++) {
                 myGridPaint[i][j].setColor(myColors[i][j]);
                 canvas.drawRect(myGrid[i][j], myGridPaint[i][j]);
             }

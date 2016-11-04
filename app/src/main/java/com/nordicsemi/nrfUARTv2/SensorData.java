@@ -5,6 +5,7 @@ package com.nordicsemi.nrfUARTv2;
  */
 import android.util.Log;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,9 @@ public class SensorData {
         voltageReading = Float.parseFloat(additionalData.get(additionalData.indexOf("V") + 1));
         packetSize = Integer.parseInt(additionalData.get(additionalData.size() - 2));
         timestamp = date;
+
+
+
     }
 
     public void printDataToDebug () {

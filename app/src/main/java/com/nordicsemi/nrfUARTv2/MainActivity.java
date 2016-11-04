@@ -96,9 +96,13 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private String data;
     private Boolean completedNewSensorData = false;
 
+    private final int rows = 10;
+    private final int cols = 10;
+
+    // variables for creating a random array
     private Random rand = new Random();
     //private Integer[][] randomArr = new Integer[10][10];
-    private Integer[][] randomColorArr = new Integer[10][10];
+    private Integer[][] randomColorArr = new Integer[rows][cols];
 
 
     @Override
@@ -264,6 +268,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
                          	String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
                         	 	listAdapter.add("["+currentDateTimeString+"] RX: "+text);
+                             CustomView currView = (CustomView) findViewById(R.id.customView);
                                 if(completedNewSensorData) {
                                     Log.d(TAG, "Completed new sensor data");
                                     SensorData currSensorData = allData.get(allData.size() - 1);
@@ -274,10 +279,13 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                     listAdapter.add("Voltage: " + currSensorData.getVoltageReading());
                                     listAdapter.add("Packet size: " + currSensorData.getPacketSize());
                                     listAdapter.add("Total number of readings: " + allData.size());
+                                    fillRandArr(currSensorData.getPressureReadings());
+                                    //Log.d(TAG, "Filled array with " + Arrays.toString(randomColorArr));
+                                    currView.updateArrayValues(randomColorArr);
                                 }
-                             fillRandArr();
-                             CustomView currView = (CustomView) findViewById(R.id.customView);
-                             currView.updateArrayValues(randomColorArr);
+
+
+                             //currView.updateArrayValues(randomColorArr);
 
 
                         	 	messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
@@ -432,14 +440,17 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         }
     }
 
-    private void fillRandArr () {
-        Integer color;
-        for(int i = 0; i < 10; i++) {
-            for(int j = 0; j < 10; j++) {
-                Integer num = rand.nextInt(70);
-                randomColorArr[i][j] = num;
+    private void fillRandArr (List<String> values) {
+        if(values.size() >= rows*cols) {
+            int k = 0;
+            for(int i = 0; i < rows; i++) {
+                for(int j = 0; j < cols; j++) {
+                    randomColorArr[i][j] = Integer.parseInt(values.get(k));
+                    k++;
+                }
             }
         }
+
     }
 
 
