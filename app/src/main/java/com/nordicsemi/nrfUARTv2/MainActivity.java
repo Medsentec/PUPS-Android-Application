@@ -33,6 +33,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 
 import com.nordicsemi.nrfUARTv2.UartService;
@@ -277,7 +278,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                                     listAdapter.add("Temperature readings: " + currSensorData.getTemperatureReadings());
                                     listAdapter.add("Pitch and roll: " + currSensorData.getAxesReadings());
                                     listAdapter.add("Voltage: " + currSensorData.getVoltageReading());
-                                    listAdapter.add("Packet size: " + currSensorData.getPacketSize());
+//                                    listAdapter.add("Packet size: " + currSensorData.getPacketSize());
                                     listAdapter.add("Total number of readings: " + allData.size());
                                     fillRandArr(currSensorData.getPressureReadings());
                                     //Log.d(TAG, "Filled array with " + Arrays.toString(randomColorArr));
@@ -425,19 +426,45 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     }
 
     private void evaluateString(String str) {
-        if (str.charAt(str.length() - 1) != '*') {
-            completedNewSensorData = false;
-            if (str.charAt(0) == '$') {
-                data = str;
-            } else {
-                data += str;
+        if(str.contains("$")) {
+            // Some strings contain both the end delimiter (*) and start delim ($)
+            if(str.contains("*") && (str.indexOf('$') > str.indexOf('*'))) { // make sure end comes before next start
+                Log.d(TAG, "Contains $ and * ");
+                data += str.substring(0,str.indexOf('*') + 1);
+                parseStringForData(data);
+                data = str.substring(str.lastIndexOf('$'));
             }
-        } else {
-            data += str;
-            Log.d(TAG, "FInal string is: " + data);
-            parseStringForData(data);
-            //allData.add(data);
+            else {
+                Log.d(TAG, "Contains $");
+                completedNewSensorData = false;
+                data = str.substring(str.lastIndexOf('$'));
+            }
+
         }
+        else if (str.contains("*")) {
+            Log.d(TAG, "Contains *");
+            data += str.substring(0, str.indexOf('*') + 1);
+            Log.d(TAG, "Final String: " + data);
+            parseStringForData(data);
+        }
+        else {
+            Log.d(TAG, "Contains neither");
+            data += str;
+        }
+
+//        if (str.charAt(str.length() - 1) != '*') {
+//            completedNewSensorData = false;
+//            if (str.charAt(0) == '$') {
+//                data = str;
+//            } else {
+//                data += str;
+//            }
+//        } else {
+//            data += str;
+//            Log.d(TAG, "FInal string is: " + data);
+//            parseStringForData(data);
+//            //allData.add(data);
+//        }
     }
 
     private void fillRandArr (List<String> values) {
@@ -458,8 +485,10 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private void parseStringForData(String completedStr) {
         List<String> separatedValues = Arrays.asList(completedStr.split(","));
         Log.d(TAG, "list looks like " + separatedValues);
-        List<String> pressureReadings = separatedValues.subList(1, separatedValues.indexOf("T") - 1); // Take everything except for the $ up to the 64th number
-        List<String> additionalData = separatedValues.subList(separatedValues.indexOf("T"), separatedValues.size());
+
+        List<String> pressureReadings = separatedValues.subList(1, 102); // TODO fix this
+
+        List<String> additionalData = separatedValues.subList(102, separatedValues.size());
         Log.d(TAG, "Pressure readings: " + pressureReadings);
         Log.d(TAG, "Additional Data: " + additionalData);
         SensorData currData = new SensorData(pressureReadings, additionalData, DateFormat.getTimeInstance().format(new Date()));

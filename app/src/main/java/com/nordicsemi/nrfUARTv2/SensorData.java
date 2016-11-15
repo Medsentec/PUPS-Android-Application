@@ -15,7 +15,7 @@ public class SensorData {
     private List<String> temperatureReadings;
     private List<String> axesReadings;
     private Float voltageReading;
-    private Integer packetSize;
+//    private Integer packetSize;
     private String timestamp;
     public static final String TAG = "SensorData";
 
@@ -24,7 +24,7 @@ public class SensorData {
         temperatureReadings = additionalData.subList(additionalData.indexOf("T") + 1, additionalData.indexOf("O"));
         axesReadings = additionalData.subList(additionalData.indexOf("O") + 1, additionalData.indexOf("V"));
         voltageReading = Float.parseFloat(additionalData.get(additionalData.indexOf("V") + 1));
-        packetSize = Integer.parseInt(additionalData.get(additionalData.size() - 2));
+//        packetSize = Integer.parseInt(additionalData.get(additionalData.size() - 2));
         timestamp = date;
 
 
@@ -36,7 +36,7 @@ public class SensorData {
         Log.d(TAG, "Temp: " + temperatureReadings);
         Log.d(TAG, "Axes: " + axesReadings);
         Log.d(TAG, "Voltage: " + voltageReading);
-        Log.d(TAG, "Packet size: " + packetSize);
+//        Log.d(TAG, "Packet size: " + packetSize);
     }
 
     public List<String> getPressureReadings () {
@@ -55,9 +55,9 @@ public class SensorData {
         return voltageReading;
     }
 
-    public Integer getPacketSize () {
-        return packetSize;
-    }
+//    public Integer getPacketSize () {
+//        return packetSize;
+//    }
 
 
 }
