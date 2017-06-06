@@ -15,7 +15,10 @@ import static com.medsentec.bluetooth.PUPSGattService.ACTION_GATT_SERVICES_DISCO
  * A custom implementation of {@link BluetoothGattCallback} to handle the different cases of gatt
  * changes received by the application (Connection, Service, and Characteristic).
  * Created by Justin Ho on 2/4/17.
+ * BLE wasn't transferring data fast enough, current implementation is switching to utilize particle.io
+ * and their cloud enabled chips
  */
+@Deprecated
 public class PUPSBluetoothGattCallback extends BluetoothGattCallback {
 
     private static final String TAG = PUPSBluetoothGattCallback.class.getSimpleName();

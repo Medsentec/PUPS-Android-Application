@@ -16,8 +16,10 @@ import java.util.UUID;
 /**
  * A custom service to broadcast updates when receiving updates from the connected GATT device.
  * Created by Justin Ho on 2/5/17.
+ * BLE wasn't transferring data fast enough, current implementation is switching to utilize particle.io
+ * and their cloud enabled chips
  */
-
+@Deprecated
 public class PUPSGattService extends Service {
     private final static String TAG = PUPSGattService.class.getSimpleName();
 

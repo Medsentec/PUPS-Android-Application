@@ -26,7 +26,10 @@ import java.text.ParseException;
 
 /**
  * A custom Activity associated with UI events that happen upon connecting a bluetooth device.
+ * BLE wasn't transferring data fast enough, current implementation is switching to utilize particle.io
+ * and their cloud enabled chips
  */
+@Deprecated
 public class DeviceConnectedActivity extends AppCompatActivity {
 
     private final static String TAG = DeviceConnectedActivity.class.getSimpleName();

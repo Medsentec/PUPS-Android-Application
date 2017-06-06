@@ -13,8 +13,10 @@ import java.util.Set;
  * A class to wrap the implementations of the bluetooth scanner functions.
  * Any type of bluetooth scan function should be here.
  * Created by Justin Ho on 2/27/17.
+ * BLE wasn't transferring data fast enough, current implementation is switching to utilize particle.io
+ * and their cloud enabled chips
  */
-
+@Deprecated
 public class PUPSBluetoothScanner {
 
     private static final String TAG = PUPSBluetoothScanner.class.getSimpleName();
@@ -71,7 +73,7 @@ public class PUPSBluetoothScanner {
             resetBluetoothDeviceSet();
             Log.d(TAG, "Starting Bluetooth Low Energy scan...");
             isScanning = true;
-            bluetoothLeScanner.startScan(bluetoothScanCallback);
+//            bluetoothLeScanner.startScan(bluetoothScanCallback);
         }
     }
 
@@ -81,7 +83,7 @@ public class PUPSBluetoothScanner {
     public void stopBLEScan() {
         Log.d(TAG, "Stopping Bluetooth Low Energy scan...");
         isScanning = false;
-        bluetoothLeScanner.stopScan(bluetoothScanCallback);
+//        bluetoothLeScanner.stopScan(bluetoothScanCallback);
     }
 
     /**

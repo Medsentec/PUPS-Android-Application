@@ -4,7 +4,10 @@ import android.os.Binder;
 
 /**
  * A class to get the bound service from the binder
+ * BLE wasn't transferring data fast enough, current implementation is switching to utilize particle.io
+ * and their cloud enabled chips
  */
+@Deprecated
 public class PUPSBinder extends Binder {
 
     private final com.medsentec.bluetooth.PUPSGattService PUPSGattService;

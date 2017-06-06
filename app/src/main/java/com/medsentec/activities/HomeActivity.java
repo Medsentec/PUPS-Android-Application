@@ -19,23 +19,30 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        enableBluetooth();
     }
 
     /**
      * Enables bluetooth
      * If bluetooth is already enabled, it won't do anything
+     * BLE wasn't transferring data fast enough, current implementation is switching to utilize particle.io
+     * and their cloud enabled chips
      */
+    @Deprecated
     public void enableBluetooth() {
         BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
-        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+        if (bluetoothAdapter == null /*|| !bluetoothAdapter.isEnabled()*/) {
             Log.d(TAG, "Enabling bluetooth...");
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
     }
 
+    /**
+     * BLE wasn't transferring data fast enough, current implementation is switching to utilize particle.io
+     * and their cloud enabled chips
+     */
+    @Deprecated
     public void toBluetoothSettings(View view) {
         Log.d(TAG, "Switching activity to " + BluetoothActivity.class.getSimpleName());
         Intent intent = new Intent(this, BluetoothActivity.class);

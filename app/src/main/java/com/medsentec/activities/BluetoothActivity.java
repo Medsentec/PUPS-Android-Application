@@ -33,7 +33,10 @@ import static com.medsentec.bluetooth.PUPSBluetoothScanner.SCAN_FINISHED;
 
 /**
  * A custom activity for bluetooth related UI events.
+ * BLE wasn't transferring data fast enough, current implementation is switching to utilize particle.io
+ * and their cloud enabled chips
  */
+@Deprecated
 public class BluetoothActivity extends AppCompatActivity {
 
     private static final String TAG = BluetoothActivity.class.getSimpleName();
@@ -122,14 +125,14 @@ public class BluetoothActivity extends AppCompatActivity {
             newDevice.setClickable(true);
             newDevice.setOnClickListener(new BluetoothDeviceOnClickListener());
             ViewGroup viewGroup = (ViewGroup) findViewById(R.id.deviceList);
-            String deviceDisplayValue = device.getName();
-            if (deviceDisplayValue == null) {
-                deviceDisplayValue = device.getAddress();
-            }
-            newDevice.setText(deviceDisplayValue);
-            viewGroup.addView(newDevice);
-            bluetoothDeviceMap.put(newDevice, device);
-            Log.d(TAG, "Device with name: " + deviceDisplayValue + " added to list of available devices");
+//            String deviceDisplayValue = device.getName();
+//            if (deviceDisplayValue == null) {
+//                deviceDisplayValue = device.getAddress();
+//            }
+//            newDevice.setText(deviceDisplayValue);
+//            viewGroup.addView(newDevice);
+//            bluetoothDeviceMap.put(newDevice, device);
+//            Log.d(TAG, "Device with name: " + deviceDisplayValue + " added to list of available devices");
         }
     }
 
@@ -201,12 +204,12 @@ public class BluetoothActivity extends AppCompatActivity {
 
             if (view.getParent() instanceof LinearLayout) {
                 BluetoothDevice bluetoothDevice = bluetoothDeviceMap.get(view);
-                String deviceDisplayValue = bluetoothDevice.getName();
+//                String deviceDisplayValue = bluetoothDevice.getName();
                 //  If device has no name, use the MAC address as a fallback
-                if (deviceDisplayValue == null) {
-                    deviceDisplayValue = bluetoothDevice.getAddress();
-                }
-                Log.i(TAG, "Connecting to device selected: " + deviceDisplayValue + "...");
+//                if (deviceDisplayValue == null) {
+//                    deviceDisplayValue = bluetoothDevice.getAddress();
+//                }
+//                Log.i(TAG, "Connecting to device selected: " + deviceDisplayValue + "...");
                 setCurrentConnectedDevice(bluetoothDevice.connectGatt(getContext(), false, bluetoothService.getPupsBluetoothGattCallback()));
                 toBluetoothConnected(view);
                 runnableHandler.postDelayed(new Runnable() {
