@@ -8,7 +8,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
+
 import com.medsentec.R;
+import com.medsentec.particle.ParticleUserFunctions;
+
+import io.particle.android.sdk.cloud.ParticleCloudSDK;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -19,6 +24,17 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ParticleCloudSDK.init(this);
+    }
+
+    public void login(View view) {
+        TextView usernameView = (TextView) findViewById(R.id.emailText);
+        TextView passwordView = (TextView) findViewById(R.id.passwordText);
+        ParticleUserFunctions.login(this, usernameView.getText().toString(), passwordView.getText().toString());
+    }
+
+    public void logout(View view) {
+        ParticleUserFunctions.logout(this);
     }
 
     /**
@@ -52,5 +68,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        ParticleUserFunctions.logout(this);
     }
 }

@@ -18,11 +18,49 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true">
 
-        <Button
+<!--        <Button
             android:text="Bluetooth settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/bluetoothSettings"
-            android:onClick="toBluetoothSettings"/>
+            android:onClick="toBluetoothSettings"/>-->
+
+        <Space
+            android:id="@+id/emailSpace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/emailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/emailText"
+            android:inputType="textEmailAddress"/>
+
+        <Space
+            android:id="@+id/passwordSpace"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <EditText
+            android:id="@+id/passwordText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/passwordText"
+            android:inputType="textPassword"/>
+
+        <Space
+            android:id="@+id/loginSpace"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/loginButtonText"
+            android:onClick="login"/>
     </LinearLayout>
 </RelativeLayout>

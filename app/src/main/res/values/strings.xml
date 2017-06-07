@@ -3,4 +3,7 @@
     <string name="stop_scan">Stop Scan</string>
     <string name="scan">Scan</string>
     <string name="scan_for_bluetooth_low_energy_devices">Scan for Bluetooth Low Energy devices</string>
+    <string name="loginButtonText">Login</string>
+    <string name="emailText">Email</string>
+    <string name="passwordText">Password</string>
 </resources>
