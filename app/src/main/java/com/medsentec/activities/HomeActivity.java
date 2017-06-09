@@ -1,73 +1,113 @@
 package com.medsentec.activities;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothManager;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.view.View;
-import android.widget.TextView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.medsentec.R;
-import com.medsentec.particle.ParticleUserFunctions;
 
-import io.particle.android.sdk.cloud.ParticleCloudSDK;
-
-public class HomeActivity extends AppCompatActivity {
-
-    private static final String TAG = HomeActivity.class.getSimpleName();
-    private static final int REQUEST_ENABLE_BT = 1;
+/**
+ * TODO: JavaDoc this class
+ * Created by Justin Ho on 6/8/17.
+ */
+public class HomeActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        ParticleCloudSDK.init(this);
-    }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-    public void login(View view) {
-        TextView usernameView = (TextView) findViewById(R.id.emailText);
-        TextView passwordView = (TextView) findViewById(R.id.passwordText);
-        ParticleUserFunctions.login(this, usernameView.getText().toString(), passwordView.getText().toString());
-    }
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
-    public void logout(View view) {
-        ParticleUserFunctions.logout(this);
-    }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
-    /**
-     * Enables bluetooth
-     * If bluetooth is already enabled, it won't do anything
-     * BLE wasn't transferring data fast enough, current implementation is switching to utilize particle.io
-     * and their cloud enabled chips
-     */
-    @Deprecated
-    public void enableBluetooth() {
-        BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
-        if (bluetoothAdapter == null /*|| !bluetoothAdapter.isEnabled()*/) {
-            Log.d(TAG, "Enabling bluetooth...");
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }
-    }
-
-    /**
-     * BLE wasn't transferring data fast enough, current implementation is switching to utilize particle.io
-     * and their cloud enabled chips
-     */
-    @Deprecated
-    public void toBluetoothSettings(View view) {
-        Log.d(TAG, "Switching activity to " + BluetoothActivity.class.getSimpleName());
-        Intent intent = new Intent(this, BluetoothActivity.class);
-        startActivity(intent);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ParticleUserFunctions.logout(this);
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        }
+        else if (id == R.id.nav_gallery) {
+
+        }
+        else if (id == R.id.nav_slideshow) {
+
+        }
+        else if (id == R.id.nav_manage) {
+
+        }
+        else if (id == R.id.nav_share) {
+
+        }
+        else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

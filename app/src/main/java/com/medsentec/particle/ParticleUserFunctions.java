@@ -1,11 +1,9 @@
 package com.medsentec.particle;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
-import android.widget.TextView;
 
-import com.medsentec.R;
 import com.medsentec.activities.HomeActivity;
 
 import java.io.IOException;
@@ -16,6 +14,7 @@ import io.particle.android.sdk.utils.Async;
 import io.particle.android.sdk.utils.Toaster;
 
 /**
+ * TODO: JavaDoc this class
  * Created by Justin Ho on 6/6/17.
  */
 
@@ -40,6 +39,15 @@ public class ParticleUserFunctions {
             @Override
             public void onSuccess(Object o) {
                 Toaster.s(activity, "Login Successful!");
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //  TODO: consider changing Log.d to Log.i
+                        Log.d(TAG, "Switching activity to " + HomeActivity.class.getSimpleName());
+                        Intent intent = new Intent(activity, HomeActivity.class);
+                        activity.startActivity(intent);
+                    }
+                });
             }
 
             /**
@@ -48,7 +56,7 @@ public class ParticleUserFunctions {
             @Override
             public void onFailure(ParticleCloudException exception) {
                 Log.e(TAG, "Unable to login: " + exception.getBestMessage());
-                Toaster.s(activity, "Login unsuccessful");
+                Toaster.s(activity, "Login unsuccessful: " + exception.getBestMessage());
             }
         };
         Async.executeAsync(ParticleCloudSDK.getCloud(), apiWork);
