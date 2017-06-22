@@ -24,6 +24,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ParticleCloudSDK.init(this);
+        //  TODO: REMOVE AFTER TESTING
+        TextView usernameView = (TextView) findViewById(R.id.emailText);
+        TextView passwordView = (TextView) findViewById(R.id.passwordText);
+        usernameView.setText("dev.justinh@gmail.com");
+        passwordView.setText("5sD8q#54@w3PNKxn");
     }
 
     public void login(View view) {
@@ -56,6 +61,5 @@ public class LoginActivity extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         this.logout();
-        ParticleUserFunctions.logout(this);
     }
 }

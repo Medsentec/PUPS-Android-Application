@@ -12,8 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
 import com.medsentec.R;
+import com.medsentec.particle.ParticleUserFunctions;
 
 /**
  * TODO: JavaDoc this class
@@ -46,6 +48,8 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        ParticleUserFunctions.getDevices(this, (ViewGroup) findViewById(R.id.contentHomeLayout));
+
     }
 
     @Override
